@@ -1,0 +1,38 @@
+{
+  "name": "wait-up",
+  "description": "request, wait, retry, timeout, or exit on up",
+  "keywords": [
+    "request",
+    "wait",
+    "http",
+    "server",
+    "ready",
+    "test"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/orlin/wait-up.git"
+  },
+  "bugs": {
+    "mail": "om@soundsapiens.com",
+    "url": "https://github.com/orlin/wait-up/issues"
+  },
+  "author": "Orlin M Bozhinov <om@soundsapiens.com>",
+  "contributors": [],
+  "dependencies": {
+    "request": "^2.51.0",
+    "wait": "^0.1.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.8.0"
+  },
+  "scripts": {},
+  "engines": {},
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://orlin.mit-license.org"
+    }
+  ]
+}

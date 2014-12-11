@@ -1,4 +1,4 @@
-var duration, exit, opts, patience, request, spacings, wait, waiting;
+var args, duration, exit, opts, patience, request, spacings, uri, wait, waiting;
 
 wait = require("wait");
 
@@ -10,9 +10,13 @@ spacings = 240;
 
 duration = 42000;
 
+args = process.argv.splice(2);
+
+uri = args.length > 0 ? args[0] : "http://localhost/";
+
 opts = {
   method: "GET",
-  uri: "http://localhost/",
+  uri: uri,
   timeout: patience
 };
 

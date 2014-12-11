@@ -6,7 +6,10 @@ request = require("request")
 patience = 1000 # how long request will wait (timeout)
 spacings = 240 # time in-between retries
 duration = 42000 # the ultimate patience of a process
-opts = method: "GET", uri: "http://localhost/", timeout: patience
+
+args = process.argv.splice(2)
+uri = if args.length > 0 then args[0] else "http://localhost/"
+opts = method: "GET", uri: uri, timeout: patience
 
 exit = (code, res) ->
   if res? then console.log "Got status #{res?.statusCode}"

@@ -6,7 +6,7 @@ request = require("request");
 
 patience = 1000;
 
-spacings = 100;
+spacings = 240;
 
 duration = 42000;
 
@@ -27,7 +27,7 @@ console.log(opts.method + ' ' + opts.uri);
 
 waiting = false;
 
-wait.doAndRepeat(100, function() {
+wait.doAndRepeat(spacings, function() {
   return request.get(opts, function(err, res) {
     if (!err) {
       if (waiting) {

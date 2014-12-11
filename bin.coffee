@@ -4,7 +4,7 @@ wait = require("wait")
 request = require("request")
 
 patience = 1000 # how long request will wait (timeout)
-spacings = 100 # time between retries
+spacings = 240 # time in-between retries
 duration = 42000 # the ultimate patience of a process
 opts = method: "GET", uri: "http://localhost/", timeout: patience
 
@@ -15,7 +15,7 @@ exit = (code, res) ->
 console.log opts.method + ' ' + opts.uri
 waiting = false
 
-wait.doAndRepeat 100, ->
+wait.doAndRepeat spacings, ->
   request.get opts, (err, res) ->
     if !err
       console.log() if waiting

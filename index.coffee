@@ -13,19 +13,19 @@ module.exports = (opts, cb) ->
     patience: 42000 # the ultimate patience (i.e. max duration wait)
     dots: false # true allows side-effects (i.e. write dots to stdout)
 
-  waiting = false
   merge cfg, opts
+  track = retries: 0, duration: cfg.patience
 
   wait.doAndRepeat cfg.spacings, ->
     request.get cfg.req, (err, res) ->
       if !err
-        console.log() if waiting and cfg.dots
-        cb res
+        console.log() if track.retries and cfg.dots
+        cb merge res, track
       else
         # isn't up yet
-        waiting = true
+        ++track.retries
         process.stdout.write '.' if cfg.dots
 
   wait.wait cfg.patience, ->
-    console.log() if waiting and cfg.dots
-    cb()
+    console.log() if track.retries and cfg.dots
+    cb track

@@ -24,14 +24,14 @@ exit = function(code, res) {
 };
 
 onUp(opts, function(res) {
-  if (res != null) {
+  if (res.statusCode != null) {
     if (res.statusCode === 200) {
       return exit(0, res);
     } else {
       return exit(1, res);
     }
   } else {
-    console.log("Giving-up after " + duration + " ms");
+    console.log("Gave-up after " + res.retries + " failed requests, within " + res.duration + " ms");
     return exit(1);
   }
 });

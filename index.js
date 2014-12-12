@@ -7,7 +7,7 @@ request = require("request");
 merge = require("lodash").merge;
 
 module.exports = function(opts, cb) {
-  var cfg, waiting;
+  var cfg, track;
   cfg = {
     req: {
       timeout: 1000
@@ -16,17 +16,20 @@ module.exports = function(opts, cb) {
     patience: 42000,
     dots: false
   };
-  waiting = false;
   merge(cfg, opts);
+  track = {
+    retries: 0,
+    duration: cfg.patience
+  };
   wait.doAndRepeat(cfg.spacings, function() {
     return request.get(cfg.req, function(err, res) {
       if (!err) {
-        if (waiting && cfg.dots) {
+        if (track.retries && cfg.dots) {
           console.log();
         }
-        return cb(res);
+        return cb(merge(res, track));
       } else {
-        waiting = true;
+        ++track.retries;
         if (cfg.dots) {
           return process.stdout.write('.');
         }
@@ -34,9 +37,9 @@ module.exports = function(opts, cb) {
     });
   });
   return wait.wait(cfg.patience, function() {
-    if (waiting && cfg.dots) {
+    if (track.retries && cfg.dots) {
       console.log();
     }
-    return cb();
+    return cb(track);
   });
 };

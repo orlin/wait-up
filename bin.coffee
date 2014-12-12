@@ -13,11 +13,11 @@ exit = (code, res) ->
   process.exit code
 
 onUp opts, (res) ->
-  if res?
+  if res.statusCode?
     if res.statusCode is 200
       exit 0, res
     else
       exit 1, res
   else
-    console.log "Giving-up after #{duration} ms"
+    console.log "Gave-up after #{res.retries} failed requests, within #{res.duration} ms"
     exit 1

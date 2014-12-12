@@ -1,37 +1,23 @@
 #!/usr/bin/env coffee
 
-wait = require("wait")
-request = require("request")
-
-patience = 1000 # how long request will wait (timeout)
-spacings = 240 # time in-between retries
-duration = 42000 # the ultimate patience of a process
+onUp = require("./index")
 
 args = process.argv.splice(2)
 uri = if args.length > 0 then args[0] else "http://localhost/"
-opts = method: "GET", uri: uri, timeout: patience
+opts = method: "GET", uri: uri
+
+console.log opts.method + ' ' + opts.uri
 
 exit = (code, res) ->
   if res? then console.log "Got status #{res?.statusCode}"
   process.exit code
 
-console.log opts.method + ' ' + opts.uri
-waiting = false
-
-wait.doAndRepeat spacings, ->
-  request.get opts, (err, res) ->
-    if !err
-      console.log() if waiting
-      if res.statusCode is 200
-        exit 0, res
-      else
-        exit 1, res
+onUp opts, (res) ->
+  if res?
+    if res.statusCode is 200
+      exit 0, res
     else
-      # isn't up yet
-      waiting = true
-      process.stdout.write '.'
-
-wait.wait duration, ->
-  console.log() if waiting
-  console.log "Giving-up after #{duration} ms"
-  exit 1
+      exit 1, res
+  else
+    console.log "Giving-up after #{duration} ms"
+    exit 1

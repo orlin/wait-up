@@ -21,6 +21,7 @@
   "author": "Orlin M Bozhinov <om@soundsapiens.com>",
   "contributors": [],
   "bin": { "wait-up": "./cli.js" },
+  "main": "index.js",
   "preferGlobal": true,
   "dependencies": {
     "request": "^2.51.0",

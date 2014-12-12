@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-onUp = require("./index")
+onUp = require("on-up")
 
 args = process.argv.splice(2)
 uri = if args.length > 0 then args[0] else "http://localhost/"

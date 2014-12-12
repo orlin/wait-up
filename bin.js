@@ -1,6 +1,6 @@
 var args, exit, onUp, opts, uri;
 
-onUp = require("./index");
+onUp = require("on-up");
 
 args = process.argv.splice(2);
 

@@ -1,13 +1,19 @@
 {
   "name": "wait-up",
-  "description": "request, wait, retry, timeout, or exit on up",
+  "description": "get / exit on-up",
   "keywords": [
+    "command",
     "request",
-    "wait",
+    "get",
     "http",
+    "wait",
+    "retry",
     "server",
+    "on-up",
+    "test",
     "ready",
-    "test"
+    "time",
+    "exit"
   ],
   "version": "0.0.1",
   "repository": {
@@ -23,12 +29,9 @@
   "bin": {
     "wait-up": "./cli.js"
   },
-  "main": "index.js",
   "preferGlobal": true,
   "dependencies": {
-    "lodash": "^2.4.1",
-    "request": "^2.51.0",
-    "wait": "^0.1.0"
+    "on-up": "*"
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
@@ -37,7 +40,7 @@
     "gulp-util": "^3.0.1"
   },
   "scripts": {},
-  "engines": {},
+  "engines": { "node": "*" },
   "licenses": [
     {
       "type": "MIT",

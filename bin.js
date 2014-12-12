@@ -1,24 +1,20 @@
-var args, duration, exit, opts, patience, request, spacings, uri, wait, waiting;
+var args, exit, onUp, opts, uri;
 
-wait = require("wait");
-
-request = require("request");
-
-patience = 1000;
-
-spacings = 240;
-
-duration = 42000;
+onUp = require("on-up");
 
 args = process.argv.splice(2);
 
 uri = args.length > 0 ? args[0] : "http://localhost/";
 
 opts = {
-  method: "GET",
-  uri: uri,
-  timeout: patience
+  req: {
+    method: "GET",
+    uri: uri
+  },
+  dots: true
 };
+
+console.log(opts.req.method + ' ' + opts.req.uri);
 
 exit = function(code, res) {
   if (res != null) {
@@ -27,32 +23,15 @@ exit = function(code, res) {
   return process.exit(code);
 };
 
-console.log(opts.method + ' ' + opts.uri);
-
-waiting = false;
-
-wait.doAndRepeat(spacings, function() {
-  return request.get(opts, function(err, res) {
-    if (!err) {
-      if (waiting) {
-        console.log();
-      }
-      if (res.statusCode === 200) {
-        return exit(0, res);
-      } else {
-        return exit(1, res);
-      }
+onUp(opts, function(res) {
+  if (res.statusCode != null) {
+    if (res.statusCode === 200) {
+      return exit(0, res);
     } else {
-      waiting = true;
-      return process.stdout.write('.');
+      return exit(1, res);
     }
-  });
-});
-
-wait.wait(duration, function() {
-  if (waiting) {
-    console.log();
+  } else {
+    console.log("Gave-up after " + res.retries + " failed requests, within " + res.duration + " ms");
+    return exit(1);
   }
-  console.log("Giving-up after " + duration + " ms");
-  return exit(1);
 });

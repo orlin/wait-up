@@ -1,11 +1,13 @@
 # wait-up
 
+[![NPM](https://nodei.co/npm/wait-up.png?mini=true)](https://www.npmjs.org/package/wait-up)
+
 Waits for http servers to come up with a preferably `200` ok status.
 
 ## Use by Example
 
-$ `wait-up` will try / wait to get http://localhost
-$ `wait-up http://127.0.0.1:8080` gets the provided uri
+* $ `wait-up` will try / wait to get `http://localhost`
+* $ `wait-up http://127.0.0.1:8080/location` - takes a provided uri
 
 The script will exit with statuscode `0`,
 only if a `200` response status code was got.

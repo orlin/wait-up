@@ -7,11 +7,13 @@ args = process.argv.splice(2);
 uri = args.length > 0 ? args[0] : "http://localhost/";
 
 opts = {
-  method: "GET",
-  uri: uri
+  req: {
+    method: "GET",
+    uri: uri
+  }
 };
 
-console.log(opts.method + ' ' + opts.uri);
+console.log(opts.req.method + ' ' + opts.req.uri);
 
 exit = function(code, res) {
   if (res != null) {

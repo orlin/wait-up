@@ -2,18 +2,21 @@
 
 wait = require("wait")
 request = require("request")
-
-patience = 1000 # how long request will wait (timeout)
-spacings = 240 # time in-between retries
-duration = 42000 # the ultimate patience of a process
+merge = require("lodash").merge
 
 module.exports = (opts, cb) ->
 
-  waiting = false
-  opts.patience ?= patience
+  cfg =
+    req:
+      timeout: 1000 # how long request will wait before timing-out / repeat
+    spacings: 240 # time in-between retries
+    patience: 42000 # the ultimate patience (i.e. max duration wait)
 
-  wait.doAndRepeat spacings, ->
-    request.get opts, (err, res) ->
+  waiting = false
+  merge cfg, opts
+
+  wait.doAndRepeat cfg.spacings, ->
+    request.get cfg.req, (err, res) ->
       if !err
         console.log() if waiting
         cb res
@@ -22,6 +25,6 @@ module.exports = (opts, cb) ->
         waiting = true
         process.stdout.write '.'
 
-  wait.wait duration, ->
+  wait.wait cfg.patience, ->
     console.log() if waiting
     cb()

@@ -1,23 +1,24 @@
-var duration, patience, request, spacings, wait;
+var merge, request, wait;
 
 wait = require("wait");
 
 request = require("request");
 
-patience = 1000;
-
-spacings = 240;
-
-duration = 42000;
+merge = require("lodash").merge;
 
 module.exports = function(opts, cb) {
-  var waiting;
+  var cfg, waiting;
+  cfg = {
+    req: {
+      timeout: 1000
+    },
+    spacings: 240,
+    patience: 42000
+  };
   waiting = false;
-  if (opts.patience == null) {
-    opts.patience = patience;
-  }
-  wait.doAndRepeat(spacings, function() {
-    return request.get(opts, function(err, res) {
+  merge(cfg, opts);
+  wait.doAndRepeat(cfg.spacings, function() {
+    return request.get(cfg.req, function(err, res) {
       if (!err) {
         if (waiting) {
           console.log();
@@ -29,7 +30,7 @@ module.exports = function(opts, cb) {
       }
     });
   });
-  return wait.wait(duration, function() {
+  return wait.wait(cfg.patience, function() {
     if (waiting) {
       console.log();
     }

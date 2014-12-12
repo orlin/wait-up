@@ -4,9 +4,9 @@ onUp = require("./index")
 
 args = process.argv.splice(2)
 uri = if args.length > 0 then args[0] else "http://localhost/"
-opts = method: "GET", uri: uri
+opts = req: { method: "GET", uri: uri }
 
-console.log opts.method + ' ' + opts.uri
+console.log opts.req.method + ' ' + opts.req.uri
 
 exit = (code, res) ->
   if res? then console.log "Got status #{res?.statusCode}"

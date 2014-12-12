@@ -14,7 +14,7 @@ module.exports = function(opts, cb) {
     },
     spacings: 240,
     patience: 42000,
-    dots: true
+    dots: false
   };
   waiting = false;
   merge(cfg, opts);

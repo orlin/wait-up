@@ -10,7 +10,8 @@ opts = {
   req: {
     method: "GET",
     uri: uri
-  }
+  },
+  dots: true
 };
 
 console.log(opts.req.method + ' ' + opts.req.uri);

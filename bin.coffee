@@ -4,7 +4,7 @@ onUp = require("./index")
 
 args = process.argv.splice(2)
 uri = if args.length > 0 then args[0] else "http://localhost/"
-opts = req: { method: "GET", uri: uri }
+opts = req: { method: "GET", uri: uri }, dots: true
 
 console.log opts.req.method + ' ' + opts.req.uri
 

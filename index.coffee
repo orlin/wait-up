@@ -11,7 +11,7 @@ module.exports = (opts, cb) ->
       timeout: 1000 # how long request will wait before timing-out / repeat
     spacings: 240 # time in-between retries
     patience: 42000 # the ultimate patience (i.e. max duration wait)
-    dots: true # if false -- don't write side-effects (i.e. no dots to stdout)
+    dots: false # true allows side-effects (i.e. write dots to stdout)
 
   waiting = false
   merge cfg, opts

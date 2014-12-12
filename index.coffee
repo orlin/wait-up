@@ -11,6 +11,7 @@ module.exports = (opts, cb) ->
       timeout: 1000 # how long request will wait before timing-out / repeat
     spacings: 240 # time in-between retries
     patience: 42000 # the ultimate patience (i.e. max duration wait)
+    dots: true # if false -- don't write side-effects (i.e. no dots to stdout)
 
   waiting = false
   merge cfg, opts
@@ -18,13 +19,13 @@ module.exports = (opts, cb) ->
   wait.doAndRepeat cfg.spacings, ->
     request.get cfg.req, (err, res) ->
       if !err
-        console.log() if waiting
+        console.log() if waiting and cfg.dots
         cb res
       else
         # isn't up yet
         waiting = true
-        process.stdout.write '.'
+        process.stdout.write '.' if cfg.dots
 
   wait.wait cfg.patience, ->
-    console.log() if waiting
+    console.log() if waiting and cfg.dots
     cb()

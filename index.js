@@ -13,25 +13,28 @@ module.exports = function(opts, cb) {
       timeout: 1000
     },
     spacings: 240,
-    patience: 42000
+    patience: 42000,
+    dots: true
   };
   waiting = false;
   merge(cfg, opts);
   wait.doAndRepeat(cfg.spacings, function() {
     return request.get(cfg.req, function(err, res) {
       if (!err) {
-        if (waiting) {
+        if (waiting && cfg.dots) {
           console.log();
         }
         return cb(res);
       } else {
         waiting = true;
-        return process.stdout.write('.');
+        if (cfg.dots) {
+          return process.stdout.write('.');
+        }
       }
     });
   });
   return wait.wait(cfg.patience, function() {
-    if (waiting) {
+    if (waiting && cfg.dots) {
       console.log();
     }
     return cb();
